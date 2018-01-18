@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20180109204513) do
   enable_extension "plpgsql"
 
   create_table "horoscopes", force: :cascade do |t|
-    t.datetime "day"
+    t.string "day"
     t.text "content"
     t.string "origin"
     t.integer "star_sign_id"
@@ -26,7 +26,8 @@ ActiveRecord::Schema.define(version: 20180109204513) do
 
   create_table "star_signs", force: :cascade do |t|
     t.string "sign"
-    t.string "period"
+    t.datetime "start_date"
+    t.datetime "end_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

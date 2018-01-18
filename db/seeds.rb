@@ -19,25 +19,33 @@ require 'open-uri'
 # californiapsychics .css('.horoscope-detail p').text
 
 #
-# html = open("")
+# html = open("http://www.vogue.it/en/horoscope/daily-horoscope/virgo/")
 # doc = Nokogiri::HTML(html)
-# horoscope = doc.css('.tab-content p').text
+# horoscope = doc.css('.col-content p').slice(0, 2).text
 # puts horoscope
-
+# Date.new(2017, 3, 20).strftime("%m/%d")
 signs = [
-      {:sign => "aries", :period => "March 21 - April 19", :code => "a60", :id => "1"},
-      {:sign => "taurus", :period => "April 20 - May 20", :code => "a98", :id => "2"},
-      {:sign => "gemini", :period => "May 21 - June 20", :code => "a99", :id => "3"},
-      {:sign => "cancer", :period => "June 21 - July 22", :code => "a100", :id => "4"},
-      {:sign => "leo", :period => "July 23 - August 22", :code => "a101", :id => "5"},
-      {:sign => "virgo", :period => "August 23 - September 22", :code => "a102", :id => "6"},
-      {:sign => "libra", :period => "September 23 - October 22", :code => "a103", :id => "7"},
-      {:sign => "scorpio", :period => "October 23 - November 21", :code => "a104", :id => "8"},
-      {:sign => "sagittarius", :period => "November 22 - December 21", :code => "a105", :id => "9"},
-      {:sign => "capricorn", :period => "December 22 - January 19", :code => "a106", :id => "10"},
-      {:sign => "aquarius", :period => "January 20 - February 18", :code => "a107", :id => "11"},
-      {:sign => "pisces", :period => "February 19 - March 20", :code => "a108", :id => "12"}
+      {:sign => "aries", :start_date => Date.new(2017, 3, 21), :end_date => Date.new(2017, 4, 19), :code => "a60", :id => "1"},
+      {:sign => "taurus", :start_date => Date.new(2017, 4, 20), :end_date => Date.new(2017, 5, 20),:code => "a98", :id => "2"},
+      {:sign => "gemini", :start_date => Date.new(2017, 5, 21), :end_date => Date.new(2017, 6, 20),:code => "a99", :id => "3"},
+      {:sign => "cancer", :start_date => Date.new(2017, 6, 21), :end_date => Date.new(2017, 7, 22),:code => "a100", :id => "4"},
+      {:sign => "leo", :start_date => Date.new(2017, 7, 23), :end_date => Date.new(2017, 8, 22),:code => "a101", :id => "5"},
+      {:sign => "virgo", :start_date => Date.new(2017, 8, 23), :end_date => Date.new(2017, 9, 22),:code => "a102", :id => "6"},
+      {:sign => "libra", :start_date => Date.new(2017, 9, 23), :end_date => Date.new(2017, 10, 22),:code => "a103", :id => "7"},
+      {:sign => "scorpio", :start_date => Date.new(2017, 10, 23), :end_date => Date.new(2017, 11, 21),:code => "a104", :id => "8"},
+      {:sign => "sagittarius", :start_date => Date.new(2017, 11, 22), :end_date => Date.new(2017, 12, 21),:code => "a105", :id => "9"},
+      {:sign => "capricorn", :start_date => Date.new(2017, 12, 22), :end_date => Date.new(2017, 1, 19),:code => "a106", :id => "10"},
+      {:sign => "aquarius", :start_date => Date.new(2017, 1, 20), :end_date => Date.new(2017, 2, 18),:code => "a107", :id => "11"},
+      {:sign => "pisces", :start_date => Date.new(2017, 2, 19), :end_date => Date.new(2017, 3, 20),:code => "a108", :id => "12"}
     ]
+
+users = [
+  {:name => "Elisa", :password => "minxie", :birthday => Date.new(1994, 9, 15)},
+  {:name => "Gianfranco", :password => "eagles", :birthday => Date.new(1997, 3, 22)},
+  {:name => "Gina", :password => "fragin", :birthday => Date.new(1970, 9, 28)},
+  {:name => "Franco", :password => "may16", :birthday => Date.new(1968, 11, 16)},
+  {:name => "Christian", :password => "elisa", :birthday => Date.new(1993, 3, 5)}
+]
 
 sites = [
     {:address => "https://www.astrology.com/horoscope/daily/ABCD.html", :selector => ".daily-horoscope p"},
@@ -49,14 +57,23 @@ sites = [
     {:address => "https://www.astrolis.com/horoscopes/ABCD", :selector => "span[itemprop='articleBody']"},
     {:address => "https://www.soulvibe.com/ABCD-2/", :selector => ".hungryfeed_items p"},
     {:address => "http://www.vogue.it/en/horoscope/daily-horoscope/ABCD/", :selector => ".entry p"},
-    {:address => "http://www.mirror.co.uk/lifestyle/horoscopes/ABCD/daily/", :selector => ".star-text p"},
+    {:address => "https://www.mirror.co.uk/lifestyle/horoscopes/ABCD/daily/", :selector => ".star-text p"},
     {:address => "http://www.astrology-zodiac-signs.com/horoscope/ABCD/daily/", :selector => ".dailyHoroscope p"},
     {:address => "https://www.californiapsychics.com/horoscope/ABCD-daily-horoscope/", :selector => ".horoscope-detail p"}
   ]
 
 #create star_signs using above array
 signs.each do |sign|
-  star_sign = StarSign.create(sign: sign[:sign], period: sign[:period])
+  star_sign = StarSign.create(sign: sign[:sign], start_date: sign[:start_date], end_date: sign[:end_date])
+end
+
+users.each do |user|
+  signs.each do |sign|
+    if user[:birthday].strftime("%m/%d") >= sign[:start_date].strftime("%m/%d") && user[:birthday].strftime("%m/%d") <= sign[:end_date].strftime("%m/%d")
+      User.create(name: user[:name], password: user[:password], birthday: user[:birthday], star_sign_id: sign[:id])
+    end
+  end
+
 end
 
 
@@ -85,12 +102,13 @@ sites.each do |site|
     content.shift
     content = content[0]
   when "vogue"
-    content = doc.css('.entry p')[0].text
+    content = doc.css('.col-content p').slice(0, 2).text
   else
     content = doc.css("#{site[:selector]}").text
   end
     puts content
-    horoscope = Horoscope.create(day: Time.now, content: content, origin: address.split(".")[1], star_sign_id: signScope[:id].to_i)
+    day = Time.now.strftime("%m/%d/%Y")
+    horoscope = Horoscope.create(day: day, content: content, origin: address.split(".")[1], star_sign_id: signScope[:id].to_i)
   end
 end
 

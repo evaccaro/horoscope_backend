@@ -5,6 +5,7 @@ class CreateUsers < ActiveRecord::Migration[5.1]
       t.string :password_digest
       t.datetime :birthday
       t.integer :star_sign_id
+      t.string, array: true, default: '{}' :favorites
 
       t.timestamps
     end
