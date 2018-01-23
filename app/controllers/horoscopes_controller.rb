@@ -16,9 +16,16 @@ class HoroscopesController < ApplicationController
     render :json => @horoscopes
   end
 
-  def aries
-    @horoscopes = Horoscope.where("star_sign_id = ?", 1)
+  # def show
+  #   @horoscopes = Horoscope.where("star_sign_id = ?", params[:id])
+  #   render :json => @horoscopes
+  # end
+
+  def show
+
+    @horoscopes = Horoscope.where("star_sign_id = ? AND day = ?", params[:id], Time.now.strftime("%m/%d/%Y"))
     render :json => @horoscopes
+
   end
 
 end

@@ -63,18 +63,18 @@ sites = [
   ]
 
 #create star_signs using above array
-signs.each do |sign|
-  star_sign = StarSign.create(sign: sign[:sign], start_date: sign[:start_date], end_date: sign[:end_date])
-end
-
-users.each do |user|
-  signs.each do |sign|
-    if user[:birthday].strftime("%m/%d") >= sign[:start_date].strftime("%m/%d") && user[:birthday].strftime("%m/%d") <= sign[:end_date].strftime("%m/%d")
-      User.create(name: user[:name], password: user[:password], birthday: user[:birthday], star_sign_id: sign[:id])
-    end
-  end
-
-end
+# signs.each do |sign|
+#   star_sign = StarSign.create(sign: sign[:sign], start_date: sign[:start_date], end_date: sign[:end_date])
+# end
+#
+# users.each do |user|
+#   signs.each do |sign|
+#     if user[:birthday].strftime("%m/%d") >= sign[:start_date].strftime("%m/%d") && user[:birthday].strftime("%m/%d") <= sign[:end_date].strftime("%m/%d")
+#       User.create(name: user[:name], password: user[:password], birthday: user[:birthday], star_sign_id: sign[:id])
+#     end
+#   end
+#
+# end
 
 
 sites.each do |site|
