@@ -35,11 +35,16 @@ skip_before_action :authorized
     end
   end
 
-  def update
-    @user = User.find(params[:id])
-    @user.update(favorites: params[:favorites])
-    @user.save
-    redirect_to user_path(@user)
+  # def update
+  #   @user = User.find(params[:id])
+  #   @user.update(favorites: params[:favorites])
+  #   @user.save
+  #   redirect_to user_path(@user)
+  # end
+
+  def add_favorite
+    current_user.update(favorites: params[:favorites])
+    render json: current_user
   end
 
   private

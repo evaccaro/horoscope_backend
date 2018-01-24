@@ -3,7 +3,7 @@ class HoroscopesController < ApplicationController
 
   def index
     @horoscopes = Horoscope.all
-    render json: Horoscope.all
+    render json: @horoscopes
   end
 
   def create
