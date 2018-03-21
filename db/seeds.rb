@@ -51,7 +51,7 @@ sites = [
     {:address => "https://www.astrology.com/horoscope/daily/ABCD.html", :selector => ".daily-horoscope p"},
     {:address => "https://www.horoscope.com/us/horoscopes/general/horoscope-general-daily-today.aspx?sign=IJ", :selector => ".horoscope-content p"},
     {:address => "http://horoscopes.huffingtonpost.com/astrology/ABCD/", :selector => ".topdaily .postBody"},
-    {:address => "http://www.elle.com/horoscopes/daily/EFGH/ABCD-daily-horoscope/", :selector => ".standard-body p"},
+    {:address => "https://www.elle.com/horoscopes/daily/EFGH/ABCD-daily-horoscope/", :selector => ".standard-body p"},
     {:address => "https://astrologyanswers.com/horoscopes/ABCD-daily-horoscope/", :selector => ".new_change p"},
     {:address => "http://www.nydailynews.com/horoscopes/ABCD", :selector => ".rt-b p"},
     {:address => "https://www.astrolis.com/horoscopes/ABCD", :selector => "span[itemprop='articleBody']"},
@@ -62,19 +62,19 @@ sites = [
     {:address => "https://www.californiapsychics.com/horoscope/ABCD-daily-horoscope/", :selector => ".horoscope-detail p"}
   ]
 
-#create star_signs using above array
-# signs.each do |sign|
-#   star_sign = StarSign.create(sign: sign[:sign], start_date: sign[:start_date], end_date: sign[:end_date])
-# end
+# create star_signs using above array
+signs.each do |sign|
+  star_sign = StarSign.create(sign: sign[:sign], start_date: sign[:start_date], end_date: sign[:end_date])
+end
 #
-# users.each do |user|
-#   signs.each do |sign|
-#     if user[:birthday].strftime("%m/%d") >= sign[:start_date].strftime("%m/%d") && user[:birthday].strftime("%m/%d") <= sign[:end_date].strftime("%m/%d")
-#       User.create(name: user[:name], password: user[:password], birthday: user[:birthday], star_sign_id: sign[:id])
-#     end
-#   end
-#
-# end
+users.each do |user|
+  signs.each do |sign|
+    if user[:birthday].strftime("%m/%d") >= sign[:start_date].strftime("%m/%d") && user[:birthday].strftime("%m/%d") <= sign[:end_date].strftime("%m/%d")
+      User.create(name: user[:name], password: user[:password], birthday: user[:birthday], star_sign_id: sign[:id])
+    end
+  end
+
+end
 
 
 sites.each do |site|
@@ -108,7 +108,7 @@ sites.each do |site|
   end
     puts content
     day = Time.now.strftime("%m/%d/%Y")
-    horoscope = Horoscope.create(day: day, content: content, origin: address.split(".")[1], star_sign_id: signScope[:id].to_i)
+    horoscope = Horoscope.create(day: day, content: content, origin: address.split("//")[1].split('.')[1], star_sign_id: signScope[:id].to_i)
   end
 end
 

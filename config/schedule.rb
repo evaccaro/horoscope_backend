@@ -19,6 +19,8 @@
 
 # Learn more: http://github.com/javan/whenever
 
-every 1.day, :at => '11:15 am' do
-  rake "db:seed"
+every 1.day, :at => '9:00 am' do
+  rake "db:seed", :environment => "development"
 end
+
+set :output, 'log/whenever.log'
