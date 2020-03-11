@@ -43,6 +43,7 @@ GEM
     builder (3.2.4)
     byebug (11.1.1)
     chronic (0.10.2)
+    coderay (1.1.2)
     concurrent-ruby (1.1.6)
     crass (1.0.6)
     erubi (1.9.0)
@@ -71,6 +72,17 @@ GEM
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
     pg (0.21.0)
+    pry (0.12.2)
+      coderay (~> 1.1.0)
+      method_source (~> 0.9.0)
+    pry-byebug (3.8.0)
+      byebug (~> 11.0)
+      pry (~> 0.10)
+    pry-doc (1.0.0)
+      pry (~> 0.11)
+      yard (~> 0.9.11)
+    pry-rails (0.3.9)
+      pry (>= 0.10.4)
     puma (3.12.4)
     rack (2.2.2)
     rack-cors (1.1.1)
@@ -136,6 +148,9 @@ DEPENDENCIES
   jwt
   listen (>= 3.0.5, < 3.2)
   pg (~> 0.18)
+  pry-byebug
+  pry-doc
+  pry-rails
   puma (~> 3.7)
   rack-cors
   rails (~> 5.1.4)
