@@ -25,7 +25,7 @@ require 'open-uri'
 # puts horoscope
 # Date.new(2017, 3, 20).strftime("%m/%d")
 signs = [
-      {:sign => "aries", :start_date => Date.new(2017, 3, 21), :end_date => Date.new(2017, 4, 19), :code => "a60", :id => "1"},
+      {sign => "aries", :start_date => Date.new(2017, 3, 21), :end_date => Date.new(2017, 4, 19), :code => "a60", :id => "1"},
       {:sign => "taurus", :start_date => Date.new(2017, 4, 20), :end_date => Date.new(2017, 5, 20),:code => "a98", :id => "2"},
       {:sign => "gemini", :start_date => Date.new(2017, 5, 21), :end_date => Date.new(2017, 6, 20),:code => "a99", :id => "3"},
       {:sign => "cancer", :start_date => Date.new(2017, 6, 21), :end_date => Date.new(2017, 7, 22),:code => "a100", :id => "4"},
@@ -48,7 +48,7 @@ users = [
 ]
 
 sites = [
-    {:address => "https://www.astrology.com/horoscope/daily/ABCD.html", :selector => ".daily-horoscope p"},
+    {:address => "https://www.astrology.com/horoscope/daily/ABCD.html", :selector => ".section-horoscopes p"},
     {:address => "https://www.horoscope.com/us/horoscopes/general/horoscope-general-daily-today.aspx?sign=IJ", :selector => ".horoscope-content p"},
     {:address => "http://horoscopes.huffingtonpost.com/astrology/ABCD/", :selector => ".topdaily .postBody"},
     {:address => "https://www.elle.com/horoscopes/daily/EFGH/ABCD-daily-horoscope/", :selector => ".standard-body p"},
@@ -92,7 +92,7 @@ sites.each do |site|
     doc = Nokogiri::HTML(open(address))
     case website
     when "horoscope"
-    content = doc.css('.horoscope-content p')[0].text.split(" - ")
+    content = doc.css('.main-horoscope p')[0].text.split(" - ")
     content.shift
     content = content[0]
   when "elle"
