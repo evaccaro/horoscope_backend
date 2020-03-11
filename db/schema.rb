@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180109204513) do
+ActiveRecord::Schema.define(version: 20200311020122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "favorites", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "horoscope_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "horoscopes", force: :cascade do |t|
     t.string "day"
@@ -22,6 +29,7 @@ ActiveRecord::Schema.define(version: 20180109204513) do
     t.integer "star_sign_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "favorites_count"
   end
 
   create_table "star_signs", force: :cascade do |t|
